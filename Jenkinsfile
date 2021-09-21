@@ -39,7 +39,9 @@ pipeline {
             agent {
                 label "production"
             }
-            sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+            steps {
+                sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+            }
         }
         
         
