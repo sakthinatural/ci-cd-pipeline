@@ -31,11 +31,6 @@ pipeline {
                 label "testing"
             }
             steps {
-                # withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
-                #     sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
-                #     sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
-                #  }  
-               
                 sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
             }
         }
@@ -44,15 +39,7 @@ pipeline {
             agent {
                 label "production"
             }
-            # steps {
-            #     withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
-            #         sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
-            #         sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
-            #      }  
-               
-            # }
-
-             sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+            sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
         }
         
         
