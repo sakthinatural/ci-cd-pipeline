@@ -6,10 +6,7 @@ pipeline {
     
     stages {
         stage("Build Website"){
-            agent {
-                    label "testing"
-                }
-            steps {
+           steps {
                 git 'https://github.com/sakthinatural/website.git'
                 sh "sudo docker build  . -t sakthinatural123/webimage:${tag}"
                 
@@ -17,9 +14,6 @@ pipeline {
         }
 
         stage('Push to Docker Hub') {
-            agent {
-                label "testing"
-            }
             steps {
                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
                     sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
