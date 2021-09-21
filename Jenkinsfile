@@ -11,7 +11,7 @@ pipeline {
                 }
             steps {
                 git 'https://github.com/sakthinatural/website.git'
-                sh "sudo docker build --pull --no-cache . -t sakthinatural123/customImage:${tag}"
+                sh "sudo docker build  . -t sakthinatural123/webimage:${tag}"
                 
             }
         }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
                     sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
-                    sh "sudo docker push sakthinatural123/customImage:${tag}"
+                    sh "sudo docker push sakthinatural123/webimage:${tag}"
                  }  
                 
             }
@@ -35,7 +35,7 @@ pipeline {
             }
             steps {
                 sh "sudo docker builder prune -af"
-                sh "sudo docker run -it -d -P sakthinatural123/customImage:${tag}" 
+                sh "sudo docker run -it -d -P sakthinatural123/webimage:${tag}" 
             }
         }
 
@@ -45,7 +45,7 @@ pipeline {
             }
             steps {
                 sh "sudo docker builder prune -af"
-                sh "sudo docker run -it -d -P sakthinatural123/customImage:${tag}" 
+                sh "sudo docker run -it -d -P sakthinatural123/webimage:${tag}" 
             }
         }
         
