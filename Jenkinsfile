@@ -31,6 +31,7 @@ pipeline {
                 label "testing"
             }
             steps {
+                sh "docker builder prune -af"
                 sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
             }
         }
@@ -40,6 +41,7 @@ pipeline {
                 label "production"
             }
             steps {
+                sh "docker builder prune -af"
                 sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
             }
         }
@@ -50,4 +52,4 @@ pipeline {
        
         
     }
-}
+}   
