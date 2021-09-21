@@ -8,7 +8,7 @@ pipeline {
                 }
             steps {
                 git 'https://github.com/sakthinatural/website.git'
-                sh "sudo docker build . -t sakthinatural123/testing:latest"
+                sh "sudo docker build --no-cache . -t sakthinatural123/testing:latest"
                 
             }
         }
