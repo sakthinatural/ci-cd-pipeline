@@ -8,7 +8,7 @@ pipeline {
         stage("Build Website"){
            steps {
                 git 'https://github.com/sakthinatural/website.git'
-                sh "sudo docker build  . -t sakthinatural123/webimage:${tag}"
+                sh "sudo docker build  -t sakthinatural123/webimage:${tag} ."
                 
             }
         }
