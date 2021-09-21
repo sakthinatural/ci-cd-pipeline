@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        tag = sh(returnStdout: true, script: "git rev-parse --short HEAD").trim()
+    }
     
     stages {
         stage("Build Website"){
@@ -8,7 +11,7 @@ pipeline {
                 }
             steps {
                 git 'https://github.com/sakthinatural/website.git'
-                sh "sudo docker build --no-cache . -t sakthinatural123/testing:latest"
+                sh "sudo docker build --no-cache . -t sakthinatural123/testing:${tag}"
                 
             }
         }
@@ -20,7 +23,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
                     sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
-                    sh "sudo docker push sakthinatural123/testing:latest"
+                    sh "sudo docker push sakthinatural123/testing:${tag}"
                  }  
                 
             }
@@ -32,7 +35,7 @@ pipeline {
             }
             steps {
                 sh "sudo docker builder prune -af"
-                sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+                sh "sudo docker run -it -d -P sakthinatural123/testing:${tag}" 
             }
         }
 
@@ -42,7 +45,7 @@ pipeline {
             }
             steps {
                 sh "sudo docker builder prune -af"
-                sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+                sh "sudo docker run -it -d -P sakthinatural123/testing:${tag}" 
             }
         }
         
