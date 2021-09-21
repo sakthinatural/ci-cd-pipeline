@@ -36,8 +36,6 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
                     sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
-                    sh "sudo docker rm -f $(docker ps -a -q)"
-                    sh "docker rmi -f $(docker images -a -q)"
                     sh "sudo docker pull sakthinatural123/webimage:${tag}"
                     sh "sudo docker run -it -d -P sakthinatural123/webimage:${tag}" 
                 }
@@ -51,8 +49,6 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
                     sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
-                    sh "sudo docker rm -f $(docker ps -a -q)"
-                    sh "docker rmi -f $(docker images -a -q)"
                     sh "sudo docker pull sakthinatural123/webimage:${tag}"
                     sh "sudo docker run -it -d -P sakthinatural123/webimage:${tag}" 
                 }
