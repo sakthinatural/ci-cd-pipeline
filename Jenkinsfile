@@ -11,7 +11,7 @@ pipeline {
                 }
             steps {
                 git 'https://github.com/sakthinatural/website.git'
-                sh "sudo docker build --no-cache . -t sakthinatural123/testing:${tag}"
+                sh "sudo docker build --pull --no-cache . -t sakthinatural123/testing:${tag}"
                 
             }
         }
