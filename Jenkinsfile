@@ -12,19 +12,7 @@ pipeline {
                 
             }
         }
-        stage('Test Website') {
-            agent {
-                label "testing"
-            }
-            steps {
-                withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
-                    sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
-                    sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
-                 }  
-               
-            }
-        }
-        
+
         stage('Push to Docker Hub') {
             agent {
                 label "testing"
@@ -38,27 +26,39 @@ pipeline {
             }
             
         }
-        
-        
-        stage('Copy file to  k8s master') {
-          agent {
+        stage('Push to Test server') {
+            agent {
                 label "testing"
-          }
-          steps {
-               sshagent(['sshkey']) {
-                  sh "scp -o StrictHostKeyChecking=no deployment.yaml ubuntu@172.31.26.16:/home/ubuntu"
-              }
-          }
-      }
+            }
+            steps {
+                # withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
+                #     sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
+                #     sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+                #  }  
+               
+                sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+            }
+        }
 
-      stage('Deploy App on k8s') {
-          steps {
-               sshagent(['sshkey']) {
-                sh "ssh -o StrictHostKeyChecking=no ubuntu@172.31.26.16 -C \"sudo kubectl apply -f deployment.yaml\""
-              }
-          }
-      }
-                
+        stage('Push to Production server') {
+            agent {
+                label "production"
+            }
+            # steps {
+            #     withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerpwd')]) {
+            #         sh 'sudo docker login -u sakthinatural123 -p ${dockerpwd}'
+            #         sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+            #      }  
+               
+            # }
+
+             sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+        }
+        
+        
+        
+        
+       
         
     }
 }
