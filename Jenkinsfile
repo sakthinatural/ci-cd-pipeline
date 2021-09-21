@@ -31,7 +31,7 @@ pipeline {
                 label "testing"
             }
             steps {
-                sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+                sh "sudo docker run -it -d -8080:8080 sakthinatural123/testing:latest" 
             }
         }
 
@@ -40,7 +40,7 @@ pipeline {
                 label "production"
             }
             steps {
-                sh "sudo docker run -it -d -P sakthinatural123/testing:latest" 
+                sh "sudo docker run -it -d -8080:80 sakthinatural123/testing:latest" 
             }
         }
         
