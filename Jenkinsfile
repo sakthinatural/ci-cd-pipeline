@@ -5,12 +5,16 @@ pipeline {
     }
     
     stages {
-        stage("Build Website"){
+        
+        stage("Git Chekout"){
            steps {
                 git 'https://github.com/sakthinatural/ci-cd-pipeline.git'
-                sh "sudo docker build  -t sakthinatural123/webimage:${tag} ."
-                
-            }
+             }
+        }
+        stage("Build Website"){
+           steps {
+                 sh "sudo docker build  -t sakthinatural123/webimage:${tag} ."
+              }
         }
 
         stage('Push to Docker Hub') {
